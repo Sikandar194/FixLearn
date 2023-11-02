@@ -1,0 +1,61 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <!-- Your specific content goes here -->
+
+    
+
+
+  <div class="container mt-4 " >
+
+
+      <div style="display: flex; justify-content: center; align-items: center; ">
+
+
+
+
+<div class="col-md-8 grid-margin stretch-card" >
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">{{user.Username}} Profile</h4>
+        <form class="forms-sample" method="POST" action="{{ url_for('admin.adminContributorProfile', contributor_id=user.id) }}" style= "color:#6c7293">
+          <div class="form-group row">
+            <label for="name" class="col-sm-3 col-form-label">Name</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" name="name" id="name" placeholder="name" value="{{ user.Name }}" style= "color:#6c7293">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="username" class="col-sm-3 col-form-label">Username</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="username" name="username" placeholder="username" value="{{ user.Username }}" style= "color:#6c7293">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="email" class="col-sm-3 col-form-label">Email</label>
+            <div class="col-sm-9">
+              <input type="email" class="form-control" id="email" name="email" placeholder="email" value="{{ user.Email }}" style= "color:#6c7293">
+            </div>
+          </div>
+          
+
+          <div class="form-group row">
+            <label for="Category" class="col-sm-3 col-form-label">Role</label>
+            <div class="col-sm-9">
+                <select class="form-select" id="Category" name="role" required style= "background-color:#2A3038;color:#6c7293">
+                    {% for role in roles %}
+                        <option value="{{ role.Id }}" {% if role.Id == user.RoleId %}selected{% endif %} style="">{{ role.Name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        
+          <button type="submit" class="btn btn-primary me-2">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+  {% endblock %}
+    

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="container mt-4">
+
+    <h1>Pending Posts</h1>
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <!--<p class="card-description"> Add class <code>.table-striped</code>-->
+            </p>
+            <div class="table-responsive">
+              <table class="table ">
+                <thead>
+                  <tr>
+                    <th> <i class="mdi mdi-format-list-bulleted icon-md "></i> </th>
+                    <th> Topic </th>
+                    <th> </th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                   
+                    {% for post in pending_posts %}
+                    {% set i = loop.index %}
+                  <tr >
+                        <td> {{i}} </td>
+                        
+                        <td > <a href="{{ url_for('admin.adminPostView', explanation_id=post.id) }}" style= "color:#6c7293"><i class = "mdi mdi-eye icon-sm"></i> {{ post.Topic }} </a></td>
+                  
+                        <td>
+                            <div style="display: flex; align-items: center;">
+    
+                                <form method="POST" action="{{ url_for('admin.adminApprovePost', post_id=post.id) }}">
+                                    <input type="hidden" name="contributor_id" value="{{post.id }}">
+                                    <button type="submit" class="btn btn-social-icon btn-outline-facebook" style="border:none">
+                                        <i class="mdi mdi-check icon-md "></i>
+                                    </button>
+                                </form>
+                
+                                <form
+                                method="POST" 
+                                action="{{ url_for('admin.adminRejectPost', post_id=post.id) }}"
+                                onsubmit="return confirm('Are you sure you want to reject this Post?')"
+                                >
+                                    <input type="hidden" name="contributor_id" value="{{post.id }}">
+                                    <button type="submit" class="btn btn-social-icon btn-outline-youtube" style="border:none">
+                                        <i class="mdi mdi-window-close icon-md "></i>
+                                    </button>
+                                </form>
+                            
+                            </div>
+                        </td>
+                   
+                    </tr>
+                  {% endfor %}
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+{% endblock %}
+    

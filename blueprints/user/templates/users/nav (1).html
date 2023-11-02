@@ -1,0 +1,2582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W3Schools-Style Horizontal Navbar</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* Custom CSS for the horizontal scrolling navbar */
+        
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        /* Global styles */
+        
+        .content-white {
+            color: white;
+        }
+        /* Navbar styles */
+        
+        .navbar-container {
+            display: flex;
+            background-color: #333;
+            margin: 0;
+        }
+        
+        .navbar-list {
+            display: flex;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow-x: auto;
+            scrollbar-width: none;
+            white-space: nowrap;
+        }
+        
+        .navbar-list::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .navbar-item {
+            padding: 10px 20px;
+            color: white;
+            text-align: center;
+            transition: background-color 0.2s ease;
+            text-decoration: none;
+        }
+        
+        .navbar-item:hover {
+            background-color: #4CAF50;
+        }
+        
+        .navbar-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+            font-size: 24px;
+            transition: background-color 0.2s ease;
+        }
+        
+        .navbar-arrow:hover {
+            background-color: #555;
+        }
+        /* Sidebar styles */
+        
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+        
+        .sidebar.active {
+            width: 250px;
+        }
+        
+        .sidebar a {
+            padding: 10px 25px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: 0.3s;
+        }
+        
+        .sidebar a:hover {
+            color: #f1f1f1;
+        }
+        
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+        
+        .openbtn {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #111;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+        }
+        
+        .openbtn:hover {
+            background-color: #444;
+        }
+        /* Fixed sidenav, full height */
+        
+        .sidebar {
+            height: calc(100% - 90px);
+            width: 0;
+            position: fixed;
+            top: 90px;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+        
+        .sidebar.active {
+            width: 250px;
+        }
+        
+        .dropdown-btn {
+            padding: 10px 25px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            border: none;
+            background: none;
+            width: 100%;
+            cursor: pointer;
+            text-align: left;
+            outline: none;
+        }
+        
+        .sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            text-align: left;
+            transition: 0.3s;
+        }
+        
+        .sidebar a:hover {
+            color: #f1f1f1;
+        }
+        
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+        
+        .openbtn {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #111;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+        }
+        
+        .openbtn:hover {
+            background-color: #444;
+        }
+        
+        .dropdown-container {
+            display: none;
+            background-color: #262626;
+            padding-left: 8px;
+        }
+        
+        .fa-caret-down {
+            float: right;
+            padding-right: 8px;
+        }
+        /* Some media queries for responsiveness */
+        
+        @media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+            .sidenav a {
+                font-size: 18px;
+            }
+        }
+        /* Responsive styles */
+        
+        @media screen and (max-height: 450px) {
+            .sidebar {
+                padding-top: 15px;
+            }
+            .sidebar a {
+                font-size: 18px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar-header {
+                float: none;
+            }
+            .navbar-toggle {
+                display: block;
+            }
+            .navbar-collapse.collapse {
+                display: none!important;
+            }
+            .navbar-collapse.collapse.in {
+                display: block!important;
+            }
+            .navbar-nav {
+                float: none!important;
+                margin-top: 7.5px;
+            }
+            .navbar-nav>li {
+                float: none;
+            }
+            .navbar-nav>li>a {
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+            .navbar-form {
+                display: block;
+                text-align: center;
+            }
+            .navbar-right {
+                display: block;
+                margin-top: 10px;
+            }
+            .navbar-container {
+                margin-top: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse" style="background-color: lightgray; margin-bottom: 0; padding-bottom: 0;">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">WebSiteName</a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">item-1 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Page 1</a></li>
+                            <li><a href="#">Page 2</a></li>
+                            <li><a href="#">Page 3</a></li>
+                            <li><a href="#">Page 4</a></li>
+                            <li><a href="#">Page 5</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">item-2 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Page 1</a></li>
+                            <li><a href="#">Page 2</a></li>
+                            <li><a href="#">Page 3</a></li>
+                            <li><a href="#">Page 4</a></li>
+                            <li><a href="#">Page 5</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">item-3 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Page 1</a></li>
+                            <li><a href="#">Page 2</a></li>
+                            <li><a href="#">Page 3</a></li>
+                            <li><a href="#">Page 4</a></li>
+                            <li><a href="#">Page 5</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">item-4 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Page 1</a></li>
+                            <li><a href="#">Page 2</a></li>
+                            <li><a href="#">Page 3</a></li>
+                            <li><a href="#">Page 4</a></li>
+                            <li><a href="#">Page 5</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">item-5 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Page 1</a></li>
+                            <li><a href="#">Page 2</a></li>
+                            <li><a href="#">Page 3</a></li>
+                            <li><a href="#">Page 4</a></li>
+                            <li><a href="#">Page 5</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search" name="search">
+                    </div>
+                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- W3Schools-Style Horizontal Scrolling Navbar -->
+    <div class="navbar-container " id="myCarousel">
+        <div class="navbar-arrow left-arrow" id="left-arrow">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        </div>
+        <ul class="navbar-list content-white">
+
+            <!-- Apply white color to content -->
+            <!-- Add your items here (repeat as needed) -->
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">Css</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+            <li class="navbar-item" id="htmlItem">
+                <a href="#" onclick="openNav()">HTML</a>
+                <div id="mySidebar" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <div class="sidenav">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a><a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#clients">Clients</a>
+                        <a href="#contact">Contact</a>
+                        <button class="dropdown-btn">Dropdown
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-container">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                        <a href="#contact">Search</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="navbar-arrow right-arrow" id="right-arrow">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        </div>
+    </div>
+    <div id="main">
+
+        <p>Click on the hamburger menu/bar icon to open the sidebar, and push this content to the right.</p>
+    </div>
+
+    <script>
+        // JavaScript for the slider functionality
+        const navbarList = document.querySelector('.navbar-list');
+        const leftArrow = document.getElementById('left-arrow');
+        const rightArrow = document.getElementById('right-arrow');
+
+        leftArrow.addEventListener('click', () => {
+            navbarList.scrollLeft -= 120; // Adjust the scroll distance as needed
+        });
+
+        rightArrow.addEventListener('click', () => {
+            navbarList.scrollLeft += 120; // Adjust the scroll distance as needed
+        });
+
+        $(document).ready(function() {
+            // Function to toggle the login link based on screen size
+            function toggleLoginLink() {
+                if ($(window).width() <= 768) {
+                    $('.hidden-xs').hide(); // Hide login link in mobile view
+                } else {
+                    $('.hidden-xs').show(); // Show login link in desktop view
+                }
+            }
+
+            function toggleSidebar(sidebarId) {
+                var sidebar = document.getElementById(sidebarId);
+                if (sidebar) {
+                    sidebar.classList.toggle("active");
+                }
+            }
+
+            // Initial check on page load
+            toggleLoginLink();
+
+            // Handle window resize
+            $(window).resize(function() {
+                toggleLoginLink();
+            });
+        });
+
+
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+        }
+
+        var dropdown = document.getElementsByClassName("dropdown-btn");
+        var i;
+
+        for (i = 0; i < dropdown.length; i++) {
+            dropdown[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var dropdownContent = this.nextElementSibling;
+                if (dropdownContent.style.display === "block") {
+                    dropdownContent.style.display = "none";
+                } else {
+                    dropdownContent.style.display = "block";
+                }
+            });
+        }
+        const openSidebarButton = document.getElementById('openSidebar');
+        const sidebar = document.getElementById('myNavbar');
+        const htmlItem = document.getElementById('htmlItem');
+        const htmlSidebar = document.getElementById('htmlSidebar');
+
+        openSidebarButton.addEventListener('click', function() {
+            sidebar.classList.toggle('active');
+        });
+
+        htmlItem.addEventListener('click', function(event) {
+            event.stopPropagation(); // Prevent the click event from reaching the parent (sidebar)
+            htmlSidebar.classList.toggle('active');
+        });
+    </script>
+
+</body>
+
+</html>

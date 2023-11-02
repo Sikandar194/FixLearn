@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explanation View</title>
+    <!-- Include Bootstrap CSS link here -->
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>Explanation Details</h1>
+        <div class="card mt-4">
+            <div class="card-body">
+                <h5 class="card-title">{{ explanation.Topic }}</h5>
+                <p class="card-text">Views: {{ explanation.Views }}</p>
+                <p class="card-text">TodaysViews: {{ explanation.ViewsToday }}</p>
+                <p class="card-text">ThisMonthViews: {{ explanation.ViewsThisMonth }}</p>
+                <p class="card-text">Explanation: <br> {{ explanation.Explanation }}</p>
+                
+            </div>
+        </div>
+    </div>
+    <!-- Include Bootstrap JS and any other scripts here -->
+</body>
+</html>

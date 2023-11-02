@@ -1,0 +1,105 @@
+
+       <!-- <form method="POST" action="{{ url_for('contributor.contributorEditPost', explanation_id=explanation.id) }}">
+            
+            <div class="mb-3">
+                <label for="Topic" class="form-label">Topic </label>
+                <input type="text" class="form-control" id="Topic" name="Topic" value="{{ explanation.Topic }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="Explanation" class="form-label">Explanation</label>
+                <textarea class="form-control" id="Explanation" name="Explanation" rows="5" required>{{ explanation.Explanation }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+    </div>-->
+    <!-- Include Bootstrap JS and any other scripts here -->
+    {% extends 'contributorBase.html' %}
+
+    {% block content %}
+      <!-- Your specific content goes here -->
+    
+        
+        
+       
+    
+        <div class ="app-content pt-3 p-md-3 p-lg-4">
+            <div class = "container-xl">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Edit Post</h4>
+                    
+                    <form class="forms-sample" method="POST" action="{{ url_for('contributor.contributorEditPost', explanation_id=explanation.id) }}" style= "color:#6c7293">
+                      
+                     
+    
+                      <div class="form-group row">
+                        <label for="Category" class="col-sm-3 col-form-label">Subject</label>
+                        <div class="col-sm-9">
+                            <select class="form-select" id="subjectid" name="subjectid" style = "color:#5d6778" required >
+                                {% for subject in subjects %}
+                                     <option value="{{ subject.id }}">{{ subject.Name }}</option>
+                                {% endfor %}
+                                
+                            </select>
+                        </div>
+                    </div>
+                    
+    
+                    <div class="form-group row">
+                        <label for="Category" class="col-sm-3 col-form-label">Category</label>
+                        <div class="col-sm-9">
+                            <select class="form-select" id="categoryid" name="categoryid" style = "color:#5d6778" required >
+                                {% for category in categories %}
+                                     <option value="{{ category.Id }}">{{ category.Name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+    
+    
+    
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-3 col-form-label">Topic</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" name="topic" id="topic" placeholder="Topic" value="{{explanation.Topic}}"  required>
+                        </div>
+                      </div>
+                      
+    
+    
+                      <div class="form-group row">
+                        <label for="name" class="col-sm-3 col-form-label">Explanation</label>
+                        <div class="col-sm-9">
+                          <textarea type="text" class="" id="summernote" name="explanation" placeholder="explanation"   required></textarea>
+                        </div>
+                    </div>
+    
+                      <button type="submit" class="btn btn-primary me-2">Publish</button>
+                    </form>
+    
+                  </div>
+                </div>
+              </div>
+            </div>
+    
+    
+    
+    
+    <script>
+        var preFilledContent = "{{explanation.Explanation}}";
+        $(document).ready(function() {
+            $('#summernote').summernote({
+                value : preFilledContent,
+              height: 300,                 // set editor height
+      minHeight: null,             // set minimum height of editor
+      maxHeight: null,             // set maximum height of editor
+      focus: true                  // set focus to editable area after initializing summernote
+            });
+          });
+
+          $('#summernote').summernote('code', preFilledContent);
+      </script>
+    
+        {% endblock %}
+        
+    

@@ -1,0 +1,86 @@
+{% extends 'contributorBase.html' %}
+
+{% block content %}
+  <!-- Your specific content goes here -->
+
+    
+    
+   
+
+    <div class ="app-content pt-3 p-md-3 p-lg-4">
+        <div class = "container-xl">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Post</h4>
+                
+                <form class="forms-sample" method="POST" action="{{ url_for('contributor.contributorAddPost') }}" style= "color:#6c7293">
+                  
+                 
+
+                  <div class="form-group row">
+                    <label for="Category" class="col-sm-3 col-form-label">Subject</label>
+                    <div class="col-sm-9">
+                        <select class="form-select" id="subjectid" name="subjectid" style = "color:#5d6778" required >
+                            {% for subject in subjects %}
+                                 <option value="{{ subject.id }}">{{ subject.Name }}</option>
+                            {% endfor %}
+                            
+                        </select>
+                    </div>
+                </div>
+                
+
+                <div class="form-group row">
+                    <label for="Category" class="col-sm-3 col-form-label">Category</label>
+                    <div class="col-sm-9">
+                        <select class="form-select" id="categoryid" name="categoryid" style = "color:#5d6778" required >
+                            {% for category in categories %}
+                                 <option value="{{ category.Id }}">{{ category.Name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group row">
+                    <label for="name" class="col-sm-3 col-form-label">Topic</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" name="topic" id="topic" placeholder="Topic" value=""  required>
+                    </div>
+                  </div>
+                  
+
+
+                  <div class="form-group row">
+                    <label for="name" class="col-sm-3 col-form-label">Explanation</label>
+                    <div class="col-sm-9">
+                      <textarea type="text" class="" id="summernote" name="explanation" placeholder="explanation" value=""  required></textarea>
+                    </div>
+                </div>
+
+                  <button type="submit" class="btn btn-primary me-2">Publish</button>
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+<script>
+    $(document).ready(function() {
+        $('#summernote').summernote({
+
+          height: 300,                 // set editor height
+  minHeight: null,             // set minimum height of editor
+  maxHeight: null,             // set maximum height of editor
+  focus: true                  // set focus to editable area after initializing summernote
+        });
+      });
+  </script>
+
+    {% endblock %}
+    

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topic List</title>
+    <!-- Include Bootstrap CSS link here -->
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>Topic List</h1>
+        <ul class="list-group mt-4">
+            {% for topic in topics %}
+                <li class="list-group-item">
+                    <a href="{{ url_for('contributor.view', explanation_id=topic.id) }}">{{ topic.Topic }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <!-- Include Bootstrap JS and any other scripts here -->
+</body>
+</html>

@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>W3Schools-Style Horizontal Navbar</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <style>
+      /* Custom CSS for the horizontal scrolling navbar */
+
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #F3F3F3;
+      }
+      /* Global styles */
+
+      .content-white {
+        color: white;
+      }
+      /* Navbar styles */
+
+      .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
+        color: #15a362;
+        background-color: #edfdf6;
+        
+        
+    }
+
+
+      .navbar-container {
+        display: flex;
+        background-color: #15a362!important;
+        margin: 0;
+        border: none;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2); /* Add this line */
+      }
+
+      .navbar-list {
+        display: flex;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow-x: auto;
+        scrollbar-width: none;
+        white-space: nowrap;
+      }
+
+      .navbar-list::-webkit-scrollbar {
+        display: none;
+      }
+
+      .navbar-item {
+        padding: 10px 20px;
+        color: white;
+        text-align: center;
+        transition: background-color 0.2s ease;
+        text-decoration: none;
+      }
+
+
+      .navbar-item a{
+        padding: 10dip 20dip;
+        color: #edfdf6;
+        text-align: center;
+        transition: background-color 0.2s ease;
+        text-decoration: none;
+      }
+
+      .navbar-item:hover {
+        color: white;
+        background-color: #edfdf6
+      }
+
+      .navbar-item a:hover {
+        color: #15a362;
+      }
+
+      .navbar-arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #15a362;
+        color: white;
+        cursor: pointer;
+        font-size: 24px;
+        transition: background-color 0.2s ease;
+      }
+
+      .navbar-arrow:hover {
+        background-color: #129459;
+      }
+      /* Sidebar styles */
+
+      .sidebar {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: white;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+      }
+
+      .sidebar.active {
+        width: 250px;
+      }
+
+      .sidebar a {
+        padding: 10px 25px;
+        text-decoration: none;
+        font-size: 10px;
+        color: white;
+        display: block;
+        transition: 0.3s;
+      }
+
+      .sidebar a:hover {
+        color: #f1f1f1;
+      }
+
+      .sidebar .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+      }
+
+      .openbtn {
+        font-size: 20px;
+        cursor: pointer;
+        background-color: #111;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+      }
+
+      .openbtn:hover {
+        background-color: #444;
+      }
+      /* Fixed sidenav, full height */
+
+      .sidebar {
+        height: calc(100% - 90px);
+        width: 0;
+        position: fixed;
+        top: 90px;
+        left: 0;
+        background-color: #white;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+        border-right: 1px solid #D8D5D5;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); /* Add this line */
+      }
+
+      .sidebar.active {
+        width: 250px;
+      }
+
+      .dropdown-btn {
+        padding: 10px 25px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        border: none;
+        background: none;
+        width: 100%;
+        cursor: pointer;
+        text-align: left;
+        outline: none;
+      }
+
+      .sidebar a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        text-align: left;
+        transition: 0.3s;
+      }
+
+
+
+
+
+
+
+      .sidebar a:hover {
+        color: #15a362;
+      }
+
+      .sidebar .closebtn {
+        position: absolute;
+        top: 0;
+        right: 25px;
+        font-size: 36px;
+        margin-left: 50px;
+      }
+
+      .openbtn {
+        font-size: 20px;
+        cursor: pointer;
+        background-color: #111;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+      }
+
+      .openbtn:hover {
+        background-color: #444;
+      }
+
+      .dropdown-container {
+        display: none;
+        background-color: #15a362;
+        padding-left: 8px;
+      }
+
+      .fa-caret-down {
+        float: right;
+        padding-right: 8px;
+      }
+
+
+    #main {
+        transition: margin-left .5s;
+        padding: 16px;
+    }
+    
+    #main1 {
+        background-color: #fff;
+        padding: 20px;
+        /* Outside shadow */
+    }
+    
+    #inner-container {
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    }
+    
+    #content {
+        
+        padding: 15px;
+    }
+    /* Some media queries for responsiveness */
+    
+
+
+      /* Some media queries for responsiveness */
+
+      @media screen and (max-height: 450px) {
+        .sidenav {
+          padding-top: 15px;
+        }
+        .sidenav a {
+          font-size: 18px;
+        }
+      }
+      /* Responsive styles */
+
+      @media screen and (max-height: 450px) {
+        .sidebar {
+          padding-top: 15px;
+        }
+        .sidebar a {
+          font-size: 18px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .navbar-header {
+          float: none;
+        }
+        .navbar-toggle {
+          display: block;
+        }
+        .navbar-collapse.collapse {
+          display: none !important;
+        }
+        .navbar-collapse.collapse.in {
+          display: block !important;
+        }
+        .navbar-nav {
+          float: none !important;
+          margin-top: 7.5px;
+        }
+        .navbar-nav > li {
+          float: none;
+        }
+        .navbar-nav > li > a {
+          padding-top: 10px;
+          padding-bottom: 10px;
+        }
+        .navbar-form {
+          display: block;
+          text-align: center;
+        }
+        .navbar-right {
+          display: block;
+          margin-top: 10px;
+        }
+        .navbar-container {
+          margin-top: 0;
+        }
+      }
+    </style>
+  </head>
+
+  <body >
+    <nav
+      class="navbar navbar-inverse"
+      style="
+        background-color: white;
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border: none;
+        display:flex-start;
+      "
+    >
+      <div class="container-fluid" style="border: none">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">WebSiteName</a>
+          <button
+            type="button"
+            class="navbar-toggle"
+            data-toggle="collapse"
+            data-target="#myNavbar"
+          >
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            {% for category in categories %}
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#"
+                >{{category.Name}} <span class="caret"></span
+              ></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Page 1</a></li>
+                <li><a href="#">Page 2</a></li>
+                <li><a href="#">Page 3</a></li>
+                <li><a href="#">Page 4</a></li>
+                <li><a href="#">Page 5</a></li>
+              </ul>
+            </li>
+            {% endfor%}
+            
+          <form class="navbar-form navbar-left">
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search"
+                name="search"
+              />
+            </div>
+            <button type="submit" class="btn btn-default">
+              <span class="glyphicon glyphicon-search"></span>
+            </button>
+          </form>
+          <ul class="nav navbar-nav navbar-right" style="float:right">
+            {% if 'user_id' not in session %}
+            <li >
+              <a href="{{ url_for('user.userLogin') }}" 
+                ><span class="glyphicon glyphicon-log-in"></span> Login</a
+              >
+            </li>
+            {%endif%}
+            {% if 'user_id' in session %}
+            <li >
+              <a href="{{ url_for('user.logout') }}" 
+                ><span class="glyphicon glyphicon-log-out"></span> Logout</a
+              >
+            </li>
+            {%endif%}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- W3Schools-Style Horizontal Scrolling Navbar -->
+    <div class="navbar-container" id="myCarousel">
+      <div class="navbar-arrow left-arrow" id="left-arrow">
+        <span
+          class="glyphicon glyphicon-menu-left"
+          aria-hidden="true"
+        ></span>
+      </div>
+      <ul class="navbar-list content-white">
+        <!-- Apply white color to content -->
+        <!-- Add your items here (repeat as needed) -->
+        {% for subject in subjects %}
+            <li class="navbar-item" id="htmlItem">  
+                <a href="#" onclick="openNav('{{ subject.id }}')">{{ subject.Name }}</a>
+                <div id="mySidebar-{{ subject.id }}" class="sidebar">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav('{{ subject.id }}')" style="color:#15a362">×</a>
+                    <div class="sidenav">
+                        {% for explanation in subject.explanations %}
+                            <a href="#" style="font-size:15px" data-topic="{{ explanation.Topic }}" onclick="showExplanation('{{ explanation.Explanation }}')">{{ explanation.Topic }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+
+
+       
+      <div class="navbar-arrow right-arrow" id="right-arrow" style="float:right;position:fixed">
+        <span
+          class="glyphicon glyphicon-menu-right"
+          aria-hidden="true"
+        ></span>
+      </div>
+    </div>
+    <div id="main" >
+		{% block content %}{% endblock %}
+      <!--//container-->
+  </div>
+  
+
+    </div>
+
+    <script>
+      // JavaScript for the slider functionality
+      const navbarList = document.querySelector(".navbar-list");
+      const leftArrow = document.getElementById("left-arrow");
+      const rightArrow = document.getElementById("right-arrow");
+
+      leftArrow.addEventListener("click", () => {
+        navbarList.scrollLeft -= 120; // Adjust the scroll distance as needed
+      });
+
+      rightArrow.addEventListener("click", () => {
+        navbarList.scrollLeft += 120; // Adjust the scroll distance as needed
+      });
+
+      $(document).ready(function () {
+        // Function to toggle the login link based on screen size
+        function toggleLoginLink() {
+          if ($(window).width() <= 768) {
+            $(".hidden-xs").hide(); // Hide login link in mobile view
+          } else {
+            $(".hidden-xs").show(); // Show login link in desktop view
+          }
+        }
+
+        function toggleSidebar(sidebarId) {
+          var sidebar = document.getElementById(sidebarId);
+          if (sidebar) {
+            sidebar.classList.toggle("active");
+          }
+        }
+
+        // Initial check on page load
+        toggleLoginLink();
+
+        // Handle window resize
+        $(window).resize(function () {
+          toggleLoginLink();
+        });
+      });
+
+      function openNav(subjectId) {
+        var sidebarId = "mySidebar-" + subjectId;
+        var mainContentId = "main";
+        
+        closeAllSidebars();
+        document.getElementById(sidebarId).style.width = "250px";
+        document.getElementById(mainContentId).style.marginLeft = "300px";
+    }
+    
+
+      function closeNav(subjectId) {
+        var sidebarId = "mySidebar-" + subjectId;
+        var mainContentId = "main";
+
+        document.getElementById(sidebarId).style.width = "0";
+        document.getElementById(mainContentId).style.marginLeft = "0";
+      }
+
+      function closeAllSidebars() {
+        // Close all sidebars and main content sections
+        var sidebars = document.querySelectorAll(".sidebar");
+        var mainContents = document.querySelectorAll(".main-content");
+    
+        sidebars.forEach(function (sidebar) {
+            sidebar.style.width = "0";
+        });
+    
+        mainContents.forEach(function (mainContent) {
+            mainContent.style.marginLeft = "0";
+        });
+    }
+
+      var dropdown = document.getElementsByClassName("dropdown-btn");
+      var i;
+
+      for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function () {
+          this.classList.toggle("active");
+          var dropdownContent = this.nextElementSibling;
+          if (dropdownContent.style.display === "block") {
+            dropdownContent.style.display = "none";
+          } else {
+            dropdownContent.style.display = "block";
+          }
+        });
+      }
+      const openSidebarButton = document.getElementById("openSidebar");
+      const sidebar = document.getElementById("myNavbar");
+      const htmlItem = document.getElementById("htmlItem");
+      const htmlSidebar = document.getElementById("htmlSidebar");
+
+      openSidebarButton.addEventListener("click", function () {
+        sidebar.classList.toggle("active");
+      });
+
+      htmlItem.addEventListener("click", function (event) {
+        event.stopPropagation(); // Prevent the click event from reaching the parent (sidebar)
+        htmlSidebar.classList.toggle("active");
+      });
+
+
+      function showExplanation(explanationContent) {
+        const appCardBody = document.querySelector(".app-card-body");
+        const notificationContent = appCardBody.querySelector(".notification-content");
+        notificationContent.innerHTML = explanationContent;
+    }
+    
+    
+    </script>
+  </body>
+</html>
+<!--jsdnfk-->

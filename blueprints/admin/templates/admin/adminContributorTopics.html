@@ -1,0 +1,52 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <!-- Your specific content goes here -->
+
+
+
+    
+<div class="container mt-4">
+
+    <h1>{{contributor.Username}} Posts</h1>
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <!--<p class="card-description"> Add class <code>.table-striped</code>-->
+            </p>
+            <div class="table-responsive">
+              <table class="table ">
+                <thead>
+                  <tr>
+                    <th> <i class="mdi mdi-format-list-bulleted icon-md "></i> </th>
+                    <th> Topic </th>
+                    <th> </th>
+               
+                  </tr>
+                </thead>
+                <tbody>
+                   
+                    {% for explanation in explanations %}
+                    {% set i = loop.index %}
+                  <tr >
+                        <td> {{i}} </td>
+                        
+                        <td style= "color:#6c7293">  {{ explanation.Topic }} </td>
+                  
+                        <td><a href="{{ url_for('admin.adminPostView', explanation_id=explanation.id) }}"> <i class = "mdi mdi-eye icon-sm"></i> </a>  </td>
+                   
+                    </tr>
+                  {% endfor %}
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!-- Include Bootstrap JS and any other scripts here -->
+    {% endblock %}
+    
+

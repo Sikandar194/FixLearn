@@ -1,0 +1,91 @@
+{% extends "userBase.html" %} {% block content %}
+
+<!-- Wrap your content in a responsive container with margins --><!--
+<div style="display: flex; justify-content: center; height: 100vh">
+  <div
+    class="container mt-8"
+    style="
+      max-width: 100% !important;
+      background-color: white;
+      margin-top: 30px;
+      margin-bottom: 30px;
+      border: 1px solid #d8d5d5;
+      border-radius: 3px;
+    "
+  >
+    <div class="row justify-content-center">
+      <div class="col-md-11" style="margin: 30px">
+        <div class="app-content pt-3 p-md-3 p-lg-4">
+          <div class="container-xl">
+            <div class="position-relative mb-3">
+              <div class="row g-3 justify-content-between">
+                <div class="col-auto"></div>
+              </div>
+            </div>
+
+            <div class="app-card app-card-notification shadow-sm mb-4">
+              <div class="app-card-header px-4 py-3">
+                <div class="row g-3 align-items-center">
+                  <div
+                    class="col-12 col-lg-auto text-center text-lg-start"
+                  ></div>
+                  <div class="col-12 col-lg-auto text-center text-lg-start">
+                    <h4 class="notification-title mb-1">
+                      {{explanation.Topic}}
+                    </h4>
+
+                    <ul class="notification-meta list-inline mb-0">
+                      {% if explanation.Approved == True %}
+                      <li class="list-inline-item">
+                        <span>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            class="bi bi-eye"
+                            viewBox="0 0 16 16"
+                          >
+                            <path
+                              d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"
+                            />
+                            <path
+                              d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"
+                            />
+                          </svg>
+                        </span>
+                        <span> {{explanation.Views}} </span>
+                      </li>
+
+                      {% endif %}
+                    </ul>
+                  </div>
+                  
+                </div>
+             
+              </div>
+              <hr />
+           
+              <div class="app-card-body p-4" style="padding: 10px">
+                <div class="notification-content">
+                  <h2 style="text-align: center"><b>Welcome</b></h2>
+                </div>
+              </div>
+             
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+-->
+
+<div id="inner-container">
+  <div class="app-card-body p-4" style="padding: 10%">
+    <div class="notification-content">
+      <h2 style="text-align: center"><b>Welcome</b></h2>
+    </div>
+  </div>
+</div>
+{% endblock %}
